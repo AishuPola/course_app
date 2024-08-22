@@ -1,0 +1,27 @@
+<form [formGroup]="signUpForm" (ngSubmit)="signup()" class="add-movie-form">
+  <mat-form-field appearance="fill" class="form-field">
+    <mat-label>Username</mat-label>
+    <input matInput placeholder="Nikhil" formControlName="username" />
+
+    @if(username?.touched && username?.hasError('required') ){
+    <mat-error>username is <strong>required</strong></mat-error>
+    } @if(username?.touched && username?.hasError('minlength') ){
+    <mat-error>Password should be atleast 7 characters</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="form-field">
+    <mat-label>Password</mat-label>
+    <input
+      type="password"
+      matInput
+      placeholder="123467abc"
+      formControlName="password"
+    />
+  </mat-form-field>
+
+  <button mat-raised-button type="submit" class="submit-button">Signup</button>
+  <div class="login-message">
+    Already an existing user? <a routerLink="/user/login">Login here</a>
+  </div>
+</form>
