@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { CourseService } from './course.service';
-
+import { Course } from './course.service';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -11,7 +11,7 @@ import { CourseService } from './course.service';
 })
 export class AppComponent {
   title = 'course_app';
-
+  constructor(private router: Router, private cdr: ChangeDetectorRef) {}
   // username!: string | null;
   // isLoggedIn: boolean;
 
@@ -34,4 +34,16 @@ export class AppComponent {
   //   this.courseService.logout();
   //   this.router.navigate(['/']);
   // }
+  refreshView() {
+    this.cdr.detectChanges();
+  }
+  refreshComponent(category: string) {
+    this.router
+      .navigate(['/categories', category], {
+        queryParams: { refresh: new Date().getTime() },
+      })
+      .then(() => {
+        this.refreshView(); // Manually trigger change detection
+      });
+  }
 }

@@ -3,7 +3,28 @@
 
   <ul>
     <a routerLink="/home">Home</a>
-    <a routerLink="/categories">Categories</a>
+    <!-- <a routerLink="/categories">Categories</a> -->
+    <div class="dropdown">
+      <button class="dropbtn">
+        Categories
+        <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="dropdown-content">
+        <a (click)="refreshComponent('Business')">Business</a>
+        <a (click)="refreshComponent('Finance')">Finance</a>
+        <a (click)="refreshComponent('IT')">IT & Software</a>
+        <a (click)="refreshComponent('Office')">Office Productivity</a>
+        <a (click)="refreshComponent('Soft')">Soft Skills</a>
+        <a (click)="refreshComponent('Marketing')">Marketing</a>
+        <a (click)="refreshComponent('Lifestyle')">Lifestyle</a>
+        <a (click)="refreshComponent('Photography')">Photography</a>
+        <a (click)="refreshComponent('Design')">Design</a>
+        <a (click)="refreshComponent('Health')">Health</a>
+        <a (click)="refreshComponent('Music')">Music</a>
+        <a (click)="refreshComponent('Teaching')">Teaching</a>
+        <a (click)="refreshComponent('Development')">Development</a>
+      </div>
+    </div>
     <a routerLink="/login">Login</a>
     <a routerLink="/signup">Signup</a>
     <a routerLink="/courses">Courses</a>

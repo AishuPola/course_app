@@ -1,1 +1,9 @@
-<p>categories works!</p>
+<div class="all-courses-container">
+  @for(course of filteredCourses; track course.courseId) {
+  <app-courses
+    [course]="course"
+    (delete_the_course)="deleteCourse($event)"
+    [id]="course.id"
+  />
+  }
+</div>
