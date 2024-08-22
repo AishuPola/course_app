@@ -1,0 +1,26 @@
+<div class="form">
+  <form class="example-full-width">
+    <mat-form-field [formGroup]="searchForm" class="example-full-width">
+      <mat-label>Search Item...</mat-label>
+      <input
+        matInput
+        type="search"
+        placeholder="search..."
+        formControlName="search"
+      />
+    </mat-form-field>
+  </form>
+</div>
+
+@if(isLoading){
+<h1>Loading...</h1>
+}
+<div class="recipe-list-container">
+  @for (course of filteredCourses; track $index) {
+  <app-courses
+    [course]="course"
+    (deleteItemEvent)="deleteCourseP(course)"
+    [id]="course.id"
+  />
+  }
+</div>

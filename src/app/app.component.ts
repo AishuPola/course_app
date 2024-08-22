@@ -10,4 +10,14 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
   title = 'course_app';
+
+  name: string | null = null;
+
+  ngOnInit() {
+    this.checktokenusername();
+  }
+
+  checktokenusername() {
+    this.name = localStorage.getItem('username');
+  }
 }
