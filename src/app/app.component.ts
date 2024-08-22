@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { CourseService } from './course.service';
 
 @Component({
   selector: 'app-root',
@@ -11,13 +12,26 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 export class AppComponent {
   title = 'course_app';
 
-  name: string | null = null;
+  // username!: string | null;
+  // isLoggedIn: boolean;
 
-  ngOnInit() {
-    this.checktokenusername();
-  }
+  // constructor(private router: Router, private courseService: CourseService) {
+  //   this.isLoggedIn = this.checkToken();
+  // }
 
-  checktokenusername() {
-    this.name = localStorage.getItem('username');
-  }
+  // checkToken(): boolean {
+  //   const token = localStorage.getItem('token');
+  //   return !!token;
+  // }
+
+  // ngOnInit() {
+  //   this.courseService.username$.subscribe((username) => {
+  //     this.username = username;
+  //   });
+  // }
+
+  // logout() {
+  //   this.courseService.logout();
+  //   this.router.navigate(['/']);
+  // }
 }
