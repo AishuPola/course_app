@@ -10,7 +10,7 @@ import { CommonModule, CurrencyPipe } from '@angular/common';
   styleUrl: './coursedetails.component.scss',
 })
 export class CoursedetailsComponent {
-  @Input() course!: Course;
+  course!: Course;
 
   msg = '';
   isLoading: boolean = true;
@@ -29,10 +29,11 @@ export class CoursedetailsComponent {
       .then((data) => {
         this.course = data;
         this.isLoading = false;
+        console.log(data);
       })
       .catch(() => {
-        this.msg = 'Something went wrong 🥲';
         this.isLoading = false;
+        this.msg = 'Something went wrong 🥲';
       });
   }
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Course, CourseService } from '../course.service';
 import {
   FormGroup,
@@ -20,9 +20,12 @@ import { MatInputModule } from '@angular/material/input';
 import { CommonModule } from '@angular/common';
 
 import { MatCard, MatCardContent } from '@angular/material/card';
-import { Route, Router, RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { MatIcon } from '@angular/material/icon';
-import { MatIconButton } from '@angular/material/button';
+import { MatButtonModule, MatIconButton } from '@angular/material/button';
+import { CartService } from '../cart.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SnackbarforcartComponent } from '../snackbarforcart/snackbarforcart.component';
 @Component({
   selector: 'app-allcourses',
   standalone: true,
@@ -39,6 +42,8 @@ import { MatIconButton } from '@angular/material/button';
     MatCard,
     MatCardContent,
     MatIconButton,
+    MatButtonModule,
+    SnackbarforcartComponent,
   ],
   templateUrl: './allcourses.component.html',
   styleUrl: './allcourses.component.scss',
@@ -109,11 +114,21 @@ export class AllcoursesComponent {
   //   });
   // }
 
-  courseData: any;
+  courseData!: any;
   id!: string;
   search: any;
   filteredData: any;
-  constructor(private service: CourseService, private router: Router) {}
+  tokenPresence: boolean = this.checkTokenPresence();
+
+  private checkTokenPresence(): boolean {
+    return !!localStorage.getItem('token');
+  }
+  constructor(
+    private service: CourseService,
+    private router: Router,
+    private cartservice: CartService,
+    private snackBar: MatSnackBar
+  ) {}
   ngOnInit() {
     this.service.getAllCourses().then((res) => {
       this.courseData = res;
@@ -138,5 +153,21 @@ export class AllcoursesComponent {
 
   toggleSummary() {
     this.show = !this.show;
+  }
+
+  addcourses() {
+    this.router.navigate(['addcourses']);
+  }
+
+  deleteCourse() {}
+  editCourse() {}
+  cart() {
+    this.cartservice.addingCart(this.courseData);
+    this.snackBar.openFromComponent(SnackbarforcartComponent, {
+      duration: 3000, // Duration in milliseconds
+      verticalPosition: 'bottom', // Position on the screen
+      horizontalPosition: 'center', // Position on the screen
+      panelClass: ['snack-bar-success'],
+    });
   }
 }

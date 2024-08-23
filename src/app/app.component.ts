@@ -34,16 +34,4 @@ export class AppComponent {
   //   this.courseService.logout();
   //   this.router.navigate(['/']);
   // }
-  refreshView() {
-    this.cdr.detectChanges();
-  }
-  refreshComponent(category: string) {
-    this.router
-      .navigate(['/categories', category], {
-        queryParams: { refresh: new Date().getTime() },
-      })
-      .then(() => {
-        this.refreshView(); // Manually trigger change detection
-      });
-  }
 }

@@ -26,53 +26,65 @@ import { InewCourse, Course, CourseService } from '../course.service';
   styleUrl: './addcourse.component.scss',
 })
 export class AddcourseComponent {
-  allCourses: Array<Course> = [];
-  CourseForm!: FormGroup;
+  courseForm: FormGroup;
   constructor(
-    public courseservice: CourseService,
+    public courseService: CourseService,
     private router: Router,
     private fb: FormBuilder
   ) {
-    this.CourseForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(2)]],
-      course_img: [
-        '',
-        [Validators.required, Validators.pattern(/^https:\/\/.*/)],
-      ],
-      course_video: [
-        '',
-        [Validators.required, Validators.pattern(/^https:\/\/.*/)],
-      ],
-      price: [],
-
-      description: ['', [Validators.required, Validators.minLength(20)]],
+    // formGroup -> formControlName
+    this.courseForm = this.fb.group({
+      name: '',
+      price: '',
+      category: '',
+      rating: '',
+      instructor: '',
+      description: '',
+      prerequisites: '',
+      imageUrl: '',
     });
   }
+  ngOnInit() {
+    this.courseForm = this.fb.group({
+      name: '',
+      price: 199,
+      category: '',
+      rating: '',
+      instructor: '',
+      description: '',
 
+      course_image: '',
+      course_video: '',
+    });
+  }
   addCourse() {
-    if (this.CourseForm.valid) {
-      let newCourse: InewCourse = this.CourseForm.value;
+    if (this.courseForm.value) {
+      let courseadd: Course = this.courseForm.value;
 
-      this.courseservice.addCourse(newCourse).then(() => {
+      this.courseService.addCourse(courseadd).then(() => {
         this.router.navigate(['courses']);
       });
     }
   }
-
   get name() {
-    return this.CourseForm.get('name');
+    return this.courseForm.get('name');
   }
-  get course_img() {
-    return this.CourseForm.get('course_img');
+  get image() {
+    return this.courseForm.get('course_image');
   }
-  get course_video() {
-    return this.CourseForm.get('course_video');
+  get video() {
+    return this.courseForm.get('course_video');
   }
-
+  get rating() {
+    return this.courseForm.get('rating');
+  }
+  get instructor() {
+    return this.courseForm.get('instructor');
+  }
   get description() {
-    return this.CourseForm.get('description');
+    return this.courseForm.get('description');
   }
-  get price() {
-    return this.CourseForm.get('price');
+  get category() {
+    return this.courseForm.get('category');
   }
 }

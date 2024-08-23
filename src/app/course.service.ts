@@ -9,6 +9,9 @@ export interface Course {
   price: number;
   course_img: string;
   course_video: string;
+  rating: string;
+  instructor: string;
+  category: string;
 }
 export type InewCourse = Omit<Course, 'id'>;
 
@@ -42,9 +45,9 @@ export class CourseService {
   }
 
   getCourseById(id: string): Promise<Course> {
-    return fetch(`http://localhost:4000/courses/${id}`).then((res) =>
-      res.json()
-    );
+    return fetch(`http://localhost:4000/courses/${id}`, {
+      method: 'GET',
+    }).then((res) => res.json());
   }
 
   addCourse(newItem: InewCourse) {
@@ -64,7 +67,7 @@ export class CourseService {
     return await res.json();
   }
 
-  editItem(editItem: Course) {
+  editCourse(editItem: Course) {
     return fetch(`http://localhost:4000/courses/${editItem.id}`, {
       method: 'PUT',
       body: JSON.stringify(editItem),
