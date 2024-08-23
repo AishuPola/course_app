@@ -1,28 +1,100 @@
-.recipe-list-container{
+// .recipe-list-container{
+//     display: flex;
+//     flex-wrap: wrap;
+//     gap: 2rem;
+//     justify-content: center;
+// }
+
+// body{
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+// }
+
+// .form {
+//     min-width: 150px;
+//     max-width: 500px;
+//     width: 100%;
+//     margin: 2rem;
+//   }
+  
+//   .example-full-width {
+//     width: 100%;
+//   }
+  
+//   td {
+//     padding-right: 8px;
+//   }
+  
+// .container{
+
+//     height: 70vh;
+//     width: 30vw;
+//     border: 1px solid black;
+//     margin: 1em;
+//     overflow-x: hidden;
+
+// }
+// .course-and-info{
+//     display:flex;
+//     flex-direction: row;
+//     justify-content: space-between;
+// }
+.course-list-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 2rem;
-    justify-content: center;
-}
-
-body{
+    gap: 1rem;
+    justify-content: space-around;
+  }
+.course-spec {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
     align-items: center;
+  }
+
+  .course-container {
+    //   background: orange;
+    overflow: hidden;
+    width: 300px;
+  }
+
+  .course-poster {
+    height: 450px;
+    width: 100%;
+    object-fit: contain;
+
+    // border-radius: 10px;
+  }
+.top-div{
+  display:flex;
+  justify-content:flex-end;
+  margin:1em 2em;
+}
+.top-div input{
+  padding:1em;
+  margin:0 1em;
+}
+.top-div button{
+  border:none;
+  border-radius:50px;
+  padding:0.5em 1em;
+  cursor:pointer;
+}
+.top-div button:hover{
+  background:black;
+  color:white;
 }
 
-.form {
-    min-width: 150px;
-    max-width: 500px;
-    width: 100%;
-    margin: 2rem;
+  .course-rating {
+    font-size: 18px;
   }
-  
-  .example-full-width {
-    width: 100%;
+
+  .course-rating,
+  .course-title {
+    margin: 6px 0px;
   }
-  
-  td {
-    padding-right: 8px;
+
+  .action-buttons-container {
+    display: flex;
+    justify-content: space-between;
   }
-  

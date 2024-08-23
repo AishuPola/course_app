@@ -1,4 +1,4 @@
-<div class="form">
+<!-- <div class="form">
   <form class="example-full-width">
     <mat-form-field [formGroup]="searchForm" class="example-full-width">
       <mat-label>Search Item...</mat-label>
@@ -10,9 +10,9 @@
       />
     </mat-form-field>
   </form>
-</div>
+</div> -->
 
-@if(isLoading){
+<!-- @if(isLoading){
 <h1>Loading...</h1>
 }
 <div class="recipe-list-container">
@@ -22,5 +22,66 @@
     (deleteItemEvent)="deleteCourseP(course)"
     [id]="course.id"
   />
+  }
+</div> -->
+<!-- <div
+  style="
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    overflow-x: hidden;
+  "
+> -->
+<div class="top-div">
+  <input placeholder="Enter Course Name.." [(ngModel)]="search" />
+  <button (click)="searchCourse()">Search</button>
+</div>
+<div class="course-list-container">
+  @for(x of filteredData;track x.id) {
+
+  <mat-card class="course-container">
+    <img
+      src="{{ x.course_img }}"
+      alt="{{ x.coursename }}"
+      class="course-poster"
+    />
+    <mat-card-content>
+      <div class="course-spec">
+        <h2 class="course-title">
+          {{ x.name }}
+          <button
+            mat-icon-button
+            aria-label="Toggle summary"
+            (click)="toggleSummary()"
+          >
+            <mat-icon>{{
+              show ? "keyboard_arrow_up" : "keyboard_arrow_down"
+            }}</mat-icon>
+          </button>
+
+          <button
+            mat-icon-button
+            aria-label="Details of course"
+            routerLink="/courses/{{ x.id }}"
+          >
+            <mat-icon>info</mat-icon>
+          </button>
+          <router-outlet></router-outlet>
+        </h2>
+        <p class="course-rating">${{ x.price }}</p>
+      </div>
+
+      @if(show){
+      <p class="course-summary">{{ x.description }}</p>
+      }
+
+      <div class="action-buttons-container">
+        <div></div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
   }
 </div>

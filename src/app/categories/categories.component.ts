@@ -2,12 +2,11 @@ import { Component, Input, Output } from '@angular/core';
 import { CourseService } from '../course.service';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { CoursesComponent } from '../courses/courses.component';
 
 @Component({
   selector: 'app-categories',
   standalone: true,
-  imports: [CoursesComponent],
+  imports: [],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss',
 })
