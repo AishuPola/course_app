@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { LoginService } from '../login.service';
 import { Router } from '@angular/router';
+import { setUser } from '../global';
 
 @Component({
   selector: 'app-login',
@@ -25,6 +26,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
   loginForm!: FormGroup;
+  warning: boolean = false;
   constructor(
     private fb: FormBuilder,
     private loginService: LoginService,
@@ -41,11 +43,16 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       try {
         this.loginService.login(this.loginForm.value).then((data) => {
-          localStorage.setItem('token', data.token);
-          // localStorage.setItem('roleId', data.roleId);
-          localStorage.setItem('username', data.username);
-          localStorage.setItem('roleId', data.roleId);
-          this.router.navigate(['/courses']);
+          if (data.token) {
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('roleId', data.roleId);
+
+            this.router.navigate(['/courses']).then(() => {
+              window.location.reload();
+            });
+          } else {
+            this.warning = true;
+          }
         });
       } catch (err) {
         console.error({ msg: 'user not exist' });

@@ -1,15 +1,48 @@
-<nav class="navigation">
-  <div class="icon"><i class="fa-solid fa-lines-leaning"></i>E-Learning</div>
+<div class="container">
+  <nav class="navigation">
+    <div class="icon"><i class="fa-solid fa-lines-leaning"></i>E-Learning</div>
 
-  <ul>
-    <a routerLink="/home">Home</a>
-    <a routerLink="/categories">Categories</a>
+    <ul>
+      <a routerLink="/home">Home</a>
+      <!-- <a routerLink="/categories">Categories</a> -->
+      <!-- <button class="dropbtn"> -->
+      <!--   Categories -->
+      <!--   <i class="fa fa-caret-down"></i> -->
+      <!-- </button> -->
 
-    <a routerLink="/login">Login</a>
-    <a routerLink="/signup">Signup</a>
-    <a routerLink="/courses">Courses</a>
+      <select
+        [(ngModel)]="selectedOption"
+        name="select"
+        (change)="onOptionSelected($event)"
+      >
+        <option [value]="'category'">Category</option>
+        <option>Business</option>
+        <option>Finance</option>
+        <option>IT & Software</option>
+        <option>Office Productivity</option>
+        <option>Soft Skills</option>
+        <option>Marketing</option>
+        <option>Lifestyle</option>
+        <option>Photography</option>
+        <option>Design</option>
+        <option>Health</option>
+        <option>Music</option>
+        <option>Teaching</option>
+        <option>Development</option>
+      </select>
 
-    <a routerLink="/courses/cart"> <i class="fa-solid fa-cart-shopping"></i></a>
-  </ul>
-</nav>
+      <!-- <div class="dropdown-content"> -->
+      <!-- </div> -->
+      <a routerLink="/courses">Courses</a>
+      @if(!user){
+      <a routerLink="/login">Login</a>
+      <a routerLink="/signup">Signup</a>
+      } @else{
+      <button (click)="logout()">Logout</button>
+      }
+      <!---->
+      <!-- <a routerLink="/courses/cart"> <i class="fa-solid fa-cart-shopping"></i></a> -->
+    </ul>
+  </nav>
+</div>
 <router-outlet />

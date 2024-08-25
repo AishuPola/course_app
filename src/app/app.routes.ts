@@ -4,33 +4,22 @@ import { CartComponent } from './cart/cart.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
-import { authGuard } from './auth.guard';
-import { AllcoursesComponent } from './allcourses/allcourses.component';
 import { CoursedetailsComponent } from './coursedetails/coursedetails.component';
-import { AddcourseComponent } from './addcourse/addcourse.component';
+
+import { AllcoursesComponent } from './allcourses/allcourses.component';
 
 export const routes: Routes = [
   {
     path: 'home',
     component: HomeComponent,
   },
-
   {
-    path: 'categories',
+    path: 'categories/:id',
     component: CategoriesComponent,
   },
   {
     path: 'courses',
     component: AllcoursesComponent,
-  },
-  {
-    path: 'addcourses',
-    component: AddcourseComponent,
-  },
-  {
-    path: 'courses/:id',
-    component: CoursedetailsComponent,
-    canActivate: [authGuard],
   },
   {
     path: 'login',
@@ -40,9 +29,13 @@ export const routes: Routes = [
     path: 'signup',
     component: SignupComponent,
   },
+  {
+    path: 'details/:id',
+    component: CoursedetailsComponent,
+  },
 
   {
-    path: 'cart',
+    path: 'courses/cart',
     component: CartComponent,
   },
 ];

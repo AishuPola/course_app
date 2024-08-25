@@ -1,71 +1,74 @@
-<div class="top-div">
-  <div class="both">
-    <input placeholder="Enter Course Name.." [(ngModel)]="search" />
-    <button (click)="searchCourse()">Search</button>
+@if(dialouge){
+<div class="container">
+  <div class="dialouge">
+    <div>
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Course Thumbnail Image</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="123467abc"
+          [(ngModel)]="videoUrl"
+        />
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Course Video URL</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="123467abc"
+          [(ngModel)]="imageUrl"
+        />
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Price</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="123467abc"
+          [(ngModel)]="price"
+        />
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Desciption</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="123467abc"
+          [(ngModel)]="description"
+        />
+      </mat-form-field>
+    </div>
+    <div class="popbutton">
+      <button (click)="yesButton()">Edit Changes</button>
+      <button (click)="noButton()">Cancel</button>
+    </div>
   </div>
-  <button (click)="addcourses()">ADD COURSES</button>
 </div>
-<div class="course-list-container">
-  @for(x of filteredData;track x.id) {
-
-  <body>
-    <mat-card class="wholecontainer">
-      <div class="container">
-        <img src="{{ x.course_img }}" alt="Extraordinary" />
-        <div class="headingAndRating">
-          <h6>
-            {{ x.name }}
-          </h6>
-          <p class="rating">
-            ⭐
-            {{ x.rating }}
-          </p>
-        </div>
-        <p>{{ x.instructor }}</p>
-      </div>
-
-      <div class="priceAndBuyNow">
-        <div class="priceAndCat">
-          <div class="category">
-            <p>{{ x.category }}</p>
-          </div>
-          <p class="price">
-            {{ x.price | currency : "INR" }}
-          </p>
-        </div>
-      </div>
-      <div class="InfoDelBuy">
-        <div class="InfoDel">
-          <button
-            mat-icon-button
-            class="details"
-            routerLink="/courses/{{ id }}"
-          >
-            <mat-icon>info</mat-icon>
-          </button>
-          @if (tokenPresence) {
-          <button
-            mat-icon-button
-            color="warn"
-            class="delete"
-            (click)="deleteCourse()"
-          >
-            <mat-icon>delete</mat-icon></button
-          >} @if (tokenPresence) {
-          <button
-            mat-icon-button
-            color="warn"
-            class="edit"
-            (click)="editCourse()"
-          >
-            <mat-icon>edit</mat-icon></button
-          >}
-        </div>
-        <div class="buybutton">
-          <button mat-raised-button (click)="cart()">Buy</button>
-        </div>
-      </div>
-    </mat-card>
-  </body>
+}
+<div [ngClass]="{ active: dialouge }">
+  @if(isLoading){
+  <h1>Loading...</h1>
   }
+  <div class="recipe-list-container">
+    @for (course of filteredCourses; track $index) {
+    <app-courses
+      [course]="course"
+      (deleteItemEvent)="deleteCourseP(course)"
+      [id]="course.id"
+      (confirmEdit)="confirmEdit(course)"
+    />
+    }
+    <div class="load">
+      <button class="load-button" (click)="loadMore()">
+        Load More Courses...
+      </button>
+    </div>
+  </div>
 </div>

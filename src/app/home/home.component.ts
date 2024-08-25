@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { setUser } from '../global';
 
 @Component({
   selector: 'app-home',
@@ -16,4 +17,12 @@ export class HomeComponent {
   // checktokenusername() {
   //   this.name = localStorage.getItem('username');
   // }
+  constructor(private router: Router) {}
+  getStarted() {
+    if (setUser.roleId) {
+      this.router.navigate(['courses']);
+    } else {
+      this.router.navigate(['signup']);
+    }
+  }
 }

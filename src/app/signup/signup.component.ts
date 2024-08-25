@@ -10,6 +10,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { SignupService } from '../signup.service';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+
 @Component({
   selector: 'app-signup',
   standalone: true,
@@ -20,12 +22,16 @@ import { Router, RouterLink, RouterOutlet } from '@angular/router';
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
+    FormsModule,
   ],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss',
 })
 export class SignupComponent {
   signUpForm!: FormGroup;
+  warning: boolean = false;
+  isSubmitting: boolean = false; // Initialize the flag
+
   constructor(
     private fb: FormBuilder,
     private signupService: SignupService,
@@ -34,17 +40,38 @@ export class SignupComponent {
     this.signUpForm = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(3)]],
       password: ['', [Validators.minLength(7)]],
+      repassword: ['', [Validators.minLength(7)]],
     });
   }
 
   signup() {
-    if (this.signUpForm.valid) {
-      // console.log(this.signUpForm.value);
-      this.signupService.signup(this.signUpForm.value);
-      this.router.navigate(['/user/login']);
+    // Prevent multiple submissions
+    if (this.signUpForm.valid && !this.isSubmitting) {
+      this.isSubmitting = true; // Set the flag to true
+
+      const body = {
+        username: this.signUpForm.value.username,
+        password: this.signUpForm.value.password,
+      };
+      if (this.signUpForm.value.repassword === body.password) {
+        this.signupService
+          .signup(body)
+          .then((data) => {
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('roleId', data.roleId);
+            this.router.navigate(['/courses']);
+          })
+          .catch((error) => {
+            console.error('Signup error:', error);
+          })
+          .finally(() => {
+            this.isSubmitting = false;
+          });
+      } else {
+        this.warning = true;
+      }
     }
   }
-
   get username() {
     return this.signUpForm.get('username');
   }

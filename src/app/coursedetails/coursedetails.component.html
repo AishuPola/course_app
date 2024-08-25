@@ -1,14 +1,29 @@
 <body>
-  <div class="recipe-overview">
-    <img src="{{ course.course_video }}" alt="{{ course.name }}" />
-    <div class="content">
-      <div class="price-container">
-        <h2 class="item-price">{{ course.price | currency : "INR" }}</h2>
+  @if(isLoading){
+  <h1>Loading...</h1>
+  }
+  <div *ngIf="course">
+    <div class="recipe-overview">
+      <div>
+        <iframe
+          width="560"
+          height="315"
+          [src]="videoUrl"
+          frameborder="0"
+          allowfullscreen
+        >
+        </iframe>
       </div>
-      <h2 class="item-name">{{ course.name }}</h2>
-    </div>
-    <div class="description">
-      <p>{{ course.description }}</p>
+      <div class="content">
+        <div class="price-container">
+          <h2 class="item-price">{{ course.price | currency : "INR" }}</h2>
+        </div>
+        <h2 class="item-name">{{ course.name }}</h2>
+      </div>
+      <div class="description">
+        <h3>Description</h3>
+        <p>{{ course.description }}</p>
+      </div>
     </div>
   </div>
 </body>

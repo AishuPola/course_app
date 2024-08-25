@@ -1,1 +1,69 @@
-
+@if(dialouge){
+<div class="container">
+  <div class="dialouge">
+    <div>
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Course Thumbnail Image</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="123467abc"
+          [(ngModel)]="videoUrl"
+        />
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Course Video URL</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="123467abc"
+          [(ngModel)]="imageUrl"
+        />
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Price</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="123467abc"
+          [(ngModel)]="price"
+        />
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field appearance="fill" class="form-field">
+        <mat-label>Desciption</mat-label>
+        <input
+          type="text"
+          matInput
+          placeholder="123467abc"
+          [(ngModel)]="description"
+        />
+      </mat-form-field>
+    </div>
+    <div class="popbutton">
+      <button (click)="yesButton()">Edit Changes</button>
+      <button (click)="noButton()">Cancel</button>
+    </div>
+  </div>
+</div>
+}
+<div [ngClass]="{ active: dialouge }">
+  @if(isLoading){
+  <h1>Loading...</h1>
+  }
+  <div class="recipe-list-container">
+    @for (course of filteredCourses; track $index) {
+    <app-courses
+      [course]="course"
+      (deleteItemEvent)="deleteCourseP(course)"
+      [id]="course.id"
+      (confirmEdit)="confirmEdit(course)"
+    />
+    }
+  </div>
+</div>

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { resolveTypeReferenceDirective } from 'typescript';
 export interface Course {
@@ -9,9 +8,6 @@ export interface Course {
   price: number;
   course_img: string;
   course_video: string;
-  rating: string;
-  instructor: string;
-  category: string;
 }
 export type InewCourse = Omit<Course, 'id'>;
 
@@ -19,35 +15,36 @@ export type InewCourse = Omit<Course, 'id'>;
   providedIn: 'root',
 })
 export class CourseService {
-  constructor() {}
-  //   const storedUsername = localStorage.getItem('username');
-  //   if (storedUsername) {
-  //     this.usernameSubject.next(storedUsername);
-  //   }
-  // }
+  private usernameSubject = new BehaviorSubject<string | null>(null);
+  username$ = this.usernameSubject.asObservable();
 
-  // login(username: string, token: string) {
-  //   localStorage.setItem('token', token);
-  //   localStorage.setItem('username', username);
-  //   this.usernameSubject.next(username); // Update the username
-  // }
+  constructor() {
+    const storedUsername = localStorage.getItem('username');
+    if (storedUsername) {
+      this.usernameSubject.next(storedUsername);
+    }
+  }
 
-  // logout() {
-  //   localStorage.removeItem('token');
-  //   localStorage.removeItem('username');
-  //   localStorage.removeItem('roleId');
-  //   this.usernameSubject.next(null); // Clear the username
-  // }
-  getAllCourses(): Promise<any[]> {
-    return fetch('http://localhost:4000/courses', {
-      method: 'GET',
-    }).then((res) => res.json());
+  login(username: string, token: string) {
+    localStorage.setItem('token', token);
+    localStorage.setItem('username', username);
+    this.usernameSubject.next(username); // Update the username
+  }
+
+  logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    localStorage.removeItem('roleId');
+    this.usernameSubject.next(null); // Clear the username
+  }
+  getAllCourses(): Promise<Course[]> {
+    return fetch('http://localhost:4000/courses').then((res) => res.json());
   }
 
   getCourseById(id: string): Promise<Course> {
-    return fetch(`http://localhost:4000/courses/${id}`, {
-      method: 'GET',
-    }).then((res) => res.json());
+    return fetch(`http://localhost:4000/courses/${id}`).then((res) =>
+      res.json()
+    );
   }
 
   addCourse(newItem: InewCourse) {
@@ -67,7 +64,13 @@ export class CourseService {
     return await res.json();
   }
 
-  editCourse(editItem: Course) {
+  // search(searchTerm: string): Observable<Course[]> {
+  //   return this.http.get<Course[]>(
+  //     `http://localhost:4000/courses?search=${searchTerm}`
+  //   );
+  // }
+
+  editItem(editItem: Course) {
     return fetch(`http://localhost:4000/courses/${editItem.id}`, {
       method: 'PUT',
       body: JSON.stringify(editItem),

@@ -1,11 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 import { Course, CourseService } from '../course.service';
-import {
-  FormGroup,
-  FormBuilder,
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   startWith,
   debounceTime,
@@ -16,158 +11,120 @@ import {
 } from 'rxjs';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { Router } from '@angular/router';
 
 import { CommonModule } from '@angular/common';
-
-import { MatCard, MatCardContent } from '@angular/material/card';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
-import { MatIcon } from '@angular/material/icon';
-import { MatButtonModule, MatIconButton } from '@angular/material/button';
-import { CartService } from '../cart.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { SnackbarforcartComponent } from '../snackbarforcart/snackbarforcart.component';
+import { CoursesComponent } from '../courses/courses.component';
 @Component({
   selector: 'app-allcourses',
   standalone: true,
   imports: [
+    CoursesComponent,
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
     CommonModule,
-    MatCard,
-    RouterLink,
-    RouterOutlet,
-    MatIcon,
-    MatCard,
-    MatCardContent,
-    MatIconButton,
-    MatButtonModule,
-    SnackbarforcartComponent,
   ],
   templateUrl: './allcourses.component.html',
   styleUrl: './allcourses.component.scss',
 })
 export class AllcoursesComponent {
-  // allCourses: Array<Course> = [];
-  // filteredCourses: Array<Course> = [];
-  // searchForm!: FormGroup;
-  // isLoading: boolean = true;
-  // name: string | null = null;
+  allCourses: Array<Course> = [];
+  filteredCourses: Array<Course> = [];
+  searchForm!: FormGroup;
+  isLoading: boolean = true;
+  dialouge: boolean = false;
+  name: string | null = null;
+  course: any = [];
+  imageUrl: string = '';
+  videoUrl: string = '';
+  price: number = 0;
+  description: string = '';
+  end: number = 9;
 
-  // constructor(private fb: FormBuilder, private courservice: CourseService) {}
-  //   this.searchForm = this.fb.group({
-  //     search: '',
-  //   });
-  // }
+  constructor(private courservice: CourseService, private router: Router) {}
 
-  // ngOnInit() {
-  //   this.searchForm
-  //     .get('search')
-  //     ?.valueChanges.pipe(
-  //       startWith(''),
-  //       debounceTime(300),
-  //       switchMap((searchTerm) =>
-  //         this.courservice.search(searchTerm).pipe(
-  //           catchError((err) => {
-  //             console.log(err);
-  //             return of([]);
-  //           })
-  //         )
-  //       )
-  //     )
-  //     .subscribe((data) => {
-  //       console.log(data);
-  //       this.filteredCourses = data;
-  //     });
-  //   this.loadCourses();
-  //   this.checktokenusername();
-  // }
+  ngOnInit() {
+    // this.searchForm
+    //   .get('search')
+    //   ?.valueChanges.pipe(
+    //     startWith(''),
+    //     debounceTime(300),
+    //     switchMap((searchTerm) =>
+    //       // // this.courservice.search(searchTerm).pipe(
+    //       // //   catchError((err) => {
+    //       // //     console.log(err);
+    //       // //     return of([]);
+    //       // //   })
+    //       // )
+    //     )
+    //   )
+    //   .subscribe((data) => {
+    //     console.log(data);
+    //     this.filteredCourses = data;
+    //   });
+    this.loadCourses();
+    this.checktokenusername();
+  }
 
   // filterItems(searchTerm: string): Observable<Course[]> {
-  //   return this.courservice.search(searchTerm);
+  //   return this.courservice.;
+  // //   return this.courservice.search(searchTerm);
   // }
 
-  // checktokenusername() {
-  //   this.name = localStorage.getItem('username');
-  // }
-
-  // loadCourses() {
-  //   this.isLoading = true;
-  //   this.courservice
-  //     .getAllCourses()
-  //     .then((data) => {
-  //       this.allCourses = data;
-  //       // this.filteredCourses = data; // Initialize filteredItems with all items
-  //       // this.isLoading = false;
-  //       console.log(data);
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error loading courses:', error);
-  //       this.isLoading = false;
-  //     });
-  // }
-
-  // deleteCourseP(courses: Course) {
-  //   this.courservice.deleteCourse(courses).then(() => {
-  //     this.loadCourses();
-  //   });
-  // }
-
-  courseData!: any;
-  id!: string;
-  search: any;
-  filteredData: any;
-  tokenPresence: boolean = this.checkTokenPresence();
-
-  private checkTokenPresence(): boolean {
-    return !!localStorage.getItem('token');
+  loadMore() {
+    this.end = this.end + 9;
+    this.loadCourses();
   }
-  constructor(
-    private service: CourseService,
-    private router: Router,
-    private cartservice: CartService,
-    private snackBar: MatSnackBar
-  ) {}
-  ngOnInit() {
-    this.service.getAllCourses().then((res) => {
-      this.courseData = res;
-      this.filteredData = this.courseData;
-      console.log(this.filteredData);
+  checktokenusername() {
+    this.name = localStorage.getItem('username');
+  }
+
+  loadCourses() {
+    this.isLoading = true;
+    this.courservice
+      .getAllCourses()
+      .then((data) => {
+        this.filteredCourses = data.slice(0, this.end);
+        this.isLoading = false;
+      })
+      .catch((error) => {
+        console.error('Error loading courses:', error);
+        this.isLoading = false;
+      });
+  }
+
+  yesButton() {
+    var body = {
+      course_video: this.videoUrl,
+      course_img: this.imageUrl,
+      price: this.price,
+      description: this.description,
+      id: this.course.id,
+      name: this.course.name,
+    };
+    this.courservice.editItem(body).then(() => {
+      this.loadCourses();
+      this.dialouge = false;
     });
   }
-  searchCourse() {
-    this.service.getAllCourses().then((res) => {
-      this.courseData = res;
-      if (this.search) {
-        this.filteredData = this.courseData.filter(
-          (resk: any) =>
-            resk.coursename.toLowerCase() === this.search.toLowerCase()
-        );
-      } else {
-        this.filteredData = this.courseData;
-      }
+  noButton() {
+    this.dialouge = false;
+  }
+
+  deleteCourseP(courses: Course) {
+    this.courservice.deleteCourse(courses).then(() => {
+      this.loadCourses();
     });
   }
-  show = true;
 
-  toggleSummary() {
-    this.show = !this.show;
-  }
-
-  addcourses() {
-    this.router.navigate(['addcourses']);
-  }
-
-  deleteCourse() {}
-  editCourse() {}
-  cart() {
-    this.cartservice.addingCart(this.courseData);
-    this.snackBar.openFromComponent(SnackbarforcartComponent, {
-      duration: 3000, // Duration in milliseconds
-      verticalPosition: 'bottom', // Position on the screen
-      horizontalPosition: 'center', // Position on the screen
-      panelClass: ['snack-bar-success'],
-    });
+  confirmEdit(course: Course) {
+    this.imageUrl = course.course_img;
+    this.videoUrl = course.course_video;
+    this.price = course.price;
+    this.description = course.description;
+    this.dialouge = true;
+    this.course = course;
   }
 }
