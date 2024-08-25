@@ -1,40 +1,57 @@
-<form [formGroup]="courseForm" (ngSubmit)="addCourse()" class="add-course-form">
+<form [formGroup]="CourseForm" (ngSubmit)="addCourse()" class="add-recipe-form">
   <mat-form-field>
-    <mat-label>Course Name</mat-label>
-    <input
+    <mat-label>Name</mat-label>
+    <input matInput placeholder="Name" formControlName="name" />
+
+    @if(name?.touched && name?.hasError('required') ){
+    <mat-error>Name is <strong>required</strong></mat-error>
+    } @if(name?.touched && name?.hasError('minlength') ){
+    <mat-error>Please provide full recipe name 😁</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Banner</mat-label>
+    <input matInput placeholder="https://" formControlName="banner_img" />
+    @if(course_img?.touched && course_img?.hasError('required') ){
+    <mat-error>Image Url is <strong>required</strong></mat-error>
+    }@if(course_img?.touched && course_img?.hasError('pattern') ){
+    <mat-error>Pattern should start with https://</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Cover</mat-label>
+    <input matInput placeholder="Cover" formControlName="cover_img" />
+
+    @if(course_video?.touched && course_video?.hasError('required') ){
+    <mat-error>Image is <strong>required</strong></mat-error>
+    }@if(course_video?.touched && course_video?.hasError('pattern') ){
+    <mat-error>Pattern should start with https://</mat-error>
+    }
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Description</mat-label>
+    <textarea
       matInput
-      placeholder="angular full stack development"
-      formControlName="name"
-    />
+      type="text"
+      placeholder="Details"
+      formControlName="description"
+    ></textarea>
+    @if(description?.touched && description?.hasError('required') ){
+    <mat-error>Procedure is <strong>required</strong></mat-error>
+    }@if(description?.touched && description?.hasError('minlength') ){
+    <mat-error>Procedure should have atleast 20 characters</mat-error>
+    }
   </mat-form-field>
   <mat-form-field>
     <mat-label>Price</mat-label>
-    <input type="number" matInput placeholder="199" formControlName="price" />
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Category </mat-label>
-    <input matInput placeholder="Business" formControlName="category" />
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Rating</mat-label>
-    <input type="number" matInput placeholder="4" formControlName="rating" />
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Instructor</mat-label>
-    <input matInput placeholder="aishwarya" formControlName="instructor" />
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Description</mat-label>
-    <input matInput formControlName="description" />
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Video Link</mat-label>
-    <input matInput placeholder="https://" formControlName="course_video" />
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Image Link</mat-label>
-    <input matInput placeholder="https://" formControlName="course_img" />
+    <input matInput type="number" placeholder="Price" formControlName="price" />
+    @if(price?.touched && price?.hasError('required') ){
+    <mat-error>ingrediants is <strong>required</strong></mat-error>
+    }
   </mat-form-field>
 
-  <button mat-raised-button type="submit">Add Course</button>
+  <button mat-raised-button type="submit">Add Item</button>
 </form>
