@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatRadioModule } from '@angular/material/radio';
 import { Router } from '@angular/router';
 import { InewCourse, Course, CourseService } from '../course.service';
+import { setUser } from '../global';
 
 @Component({
   selector: 'app-addcourse',
@@ -26,6 +27,7 @@ import { InewCourse, Course, CourseService } from '../course.service';
   styleUrl: './addcourse.component.scss',
 })
 export class AddcourseComponent {
+  userId: any = setUser.roleId;
   allCourses: Array<Course> = [];
   CourseForm!: FormGroup;
   constructor(

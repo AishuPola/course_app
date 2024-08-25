@@ -15,6 +15,7 @@ import { Router } from '@angular/router';
 
 import { CommonModule } from '@angular/common';
 import { CoursesComponent } from '../courses/courses.component';
+import { setUser } from '../global';
 @Component({
   selector: 'app-allcourses',
   standalone: true,
@@ -30,6 +31,7 @@ import { CoursesComponent } from '../courses/courses.component';
   styleUrl: './allcourses.component.scss',
 })
 export class AllcoursesComponent {
+  userId: any = setUser.roleId;
   allCourses: Array<Course> = [];
   filteredCourses: Array<Course> = [];
   searchForm!: FormGroup;
@@ -126,5 +128,8 @@ export class AllcoursesComponent {
     this.description = course.description;
     this.dialouge = true;
     this.course = course;
+  }
+  addcourses() {
+    this.router.navigate(['addcourses']);
   }
 }

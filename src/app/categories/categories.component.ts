@@ -53,7 +53,9 @@ export class CategoriesComponent {
 
   ngOnInit() {
     let id = this.route.snapshot.paramMap.get('id') as string;
-    this.id = id.replace(/%20/g, ' ');
+    // this.id = id.replace(/%20/g, ' ');
+    this.id = id;
+    console.log(id);
     // this.searchForm
     //   .get('search')
     //   ?.valueChanges.pipe(
@@ -104,6 +106,7 @@ export class CategoriesComponent {
   }
 
   yesButton() {
+    console.log(this.price);
     let body = {
       course_video: this.videoUrl,
       course_img: this.imageUrl,
@@ -112,6 +115,7 @@ export class CategoriesComponent {
       id: this.course.id,
       name: this.course.name,
     };
+    console.log(body);
     this.courservice.editItem(body).then(() => {
       this.loadCourses();
       this.dialouge = false;

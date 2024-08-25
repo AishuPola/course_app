@@ -7,6 +7,7 @@ import { SignupComponent } from './signup/signup.component';
 import { CoursedetailsComponent } from './coursedetails/coursedetails.component';
 
 import { AllcoursesComponent } from './allcourses/allcourses.component';
+import { AddcourseComponent } from './addcourse/addcourse.component';
 
 export const routes: Routes = [
   {
@@ -20,6 +21,11 @@ export const routes: Routes = [
   {
     path: 'courses',
     component: AllcoursesComponent,
+  },
+  {
+    path: 'addcourses',
+
+    component: AddcourseComponent,
   },
   {
     path: 'login',

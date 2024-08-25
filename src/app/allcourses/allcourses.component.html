@@ -56,14 +56,22 @@
   @if(isLoading){
   <h1>Loading...</h1>
   }
+
   <div class="recipe-list-container">
-    @for (course of filteredCourses; track $index) {
-    <app-courses
-      [course]="course"
-      (deleteItemEvent)="deleteCourseP(course)"
-      [id]="course.id"
-      (confirmEdit)="confirmEdit(course)"
-    />
+    @if(userId==0){
+
+    <div>
+      <button (click)="addcourses()">AddCourses</button>
+    </div>
+    } @for (course of filteredCourses; track $index) {
+    <div>
+      <app-courses
+        [course]="course"
+        (deleteItemEvent)="deleteCourseP(course)"
+        [id]="course.id"
+        (confirmEdit)="confirmEdit(course)"
+      />
+    </div>
     }
     <div class="load">
       <button class="load-button" (click)="loadMore()">
